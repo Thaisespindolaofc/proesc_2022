@@ -14,7 +14,8 @@ class CategoryController extends Controller
     }
     public function index()
     {
-     return view('categorias-cadastrar', ['categories' => $categories] );
+     $categories = \App\Models\Category::all();
+     return view('categorias', ['categories' => $categories] );
     }
 
     public function listar()
@@ -25,7 +26,8 @@ class CategoryController extends Controller
 
     public function create()
     {
-     return view('categorias.create', ['category' => '']);
+     $categories = \App\Models\Category::all();
+     return view('categorias.create', ['category' => $categories]);
     }
 
     public function store(Request $request)

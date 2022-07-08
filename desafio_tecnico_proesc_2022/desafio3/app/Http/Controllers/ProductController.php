@@ -10,20 +10,39 @@ class ProductController extends Controller
 {    
     private $objProduct;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->objProduct = new Product();
     }
 
     public function index()
     {
-     $produtos = \App\Models\Product::all();
-     return view('produtos', ['produtos' => $produtos] );
+        $produtos = Product::select(
+            'products.id',
+            'products.name',
+            'products.price',
+            'products.category_id',
+            'products.description',
+            'categories.name as categoria'
+        )
+            ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+            ->get();
+        return view('produtos', ['produtos' => $produtos]);
     } 
 
    public function listar()
    {
-    $produtos = \App\Models\Product::all();
-    return view('produtos', ['produtos' => $produtos] );
+    $produtos = Product::select(
+        'products.id',
+        'products.name',
+        'products.price',
+        'products.category_id',
+        'products.description',
+        'categories.name as categoria'
+    )
+        ->leftjoin('categories', 'categories.id', '=', 'products.category_id')
+        ->get();
+    return view('produtos', ['produtos' => $produtos]);
    }
 
    public function create()
